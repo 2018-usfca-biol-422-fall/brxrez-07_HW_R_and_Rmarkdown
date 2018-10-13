@@ -1,6 +1,6 @@
 ---
 title: "Analysis of BLAST Results"
-author: "Don Francisco"
+author: "Brian Rezende"
 date: "October 8, 2018"
 output: github_document
 ---
@@ -121,6 +121,71 @@ joined_blast_data_metadata <- metadata_in %>%
             by = c("Run_s" = "sample_name"))
 ```
 
+```{r show-levels}
+levels(factor(joined_blast_data_metadata$env_feature_s))
+```
+
+
+```{r group-by-summarize}
+#group by anpmymized name and calculate mean percent identity
+joined_blast_data_metadata %>%
+  group_by(sscinames, sample_type_s) %>%
+  tally() %>%
+  filter(n > 500) %>%
+  ggplot(aes(x = sscinames,
+             y = n,
+             fill = sample_type_s)) +
+  geom_col()+
+  theme(axis.text.x = element_text(angle = 90,
+                                   hjust = 1)) +
+ggtitle("Most abundant species in sample types")
+
+  
+
+
+
+  ggplot(aes(x = sex_s,
+             y = age_s)) +
+    geom_col() +
+    geom_errorbar(aes(ymax = mean_pident + sd_pident,
+                      ymin = mean_pident - sd_pident),
+                  width = 0.3) +
+  theme(axis.text.x = element_text(angle = 90,
+                                   hjust = 1))
+```
+
+```{r bitscore and organisms}
+# Here using the 
+joined_blast_data_metadata %>%
+  filter(bitscore < 200,
+         bitscore > 150) %>%
+  group_by(sscinames) %>%
+  summarize(mean_bitscore = mean(bitscore)) %>%
+  ggplot(aes(x = sscinames,
+             y = mean_bitscore))+
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90,
+                                   hjust = 1)) +
+  ggtitle("Bitscores")
+```
+
+```{r filtering score}
+joined_blast_data_metadata %>%
+  filter(bitscore < 200,
+         bitscore > 150) %>%
+  select(sscinames) %>%
+  distinct() %>%
+  pull() -> low_bitscore
+```
+
+```{r }
+joined_blast_data_metadata %>%
+  filter(sscinames %in% low_bitscore) %>%
+  group_by(sscinames) %>%
+  tally() %>%
+  arrange(desc(n))
+```
+
 
 ```{r histograms}
 # Here we're using the dplyr piping syntax to select a subset of rows matching a
@@ -133,7 +198,15 @@ joined_blast_data_metadata %>%
     ggtitle("Percent Identity") +
     xlab("Percent")
 ```
+```{r dplyr-example-1}
+# using select () to extract particular columns of data
+joined_blast_data_metadata %>%
+  select(Organism_s, AvgSpotLen_l)
 
+# use filter() to extract only certain rows that match a condition 
+joined_blast_data_metadata %>%
+  filter(env_material_s == "dust") 
+```
 Don't forget to report what your figures show in words, here in the Results section.
 
 ```{r summary-table}

@@ -127,7 +127,7 @@ levels(factor(joined_blast_data_metadata$env_feature_s))
 
 
 ```{r group-by-summarize}
-#group by anpmymized name and calculate mean percent identity
+#group by species name and calculate mean percent identity
 joined_blast_data_metadata %>%
   group_by(sscinames, sample_type_s) %>%
   tally() %>%
@@ -139,26 +139,25 @@ joined_blast_data_metadata %>%
   theme(axis.text.x = element_text(angle = 90,
                                    hjust = 1)) +
 ggtitle("Most abundant species in sample types")
-
-  
-
-
-
-  ggplot(aes(x = sex_s,
-             y = age_s)) +
-    geom_col() +
-    geom_errorbar(aes(ymax = mean_pident + sd_pident,
-                      ymin = mean_pident - sd_pident),
-                  width = 0.3) +
-  theme(axis.text.x = element_text(angle = 90,
-                                   hjust = 1))
 ```
+
+```{r alignment length and errors}
+#group and track the sequence alignment length and number of mismatches 
+joined_blast_data_metadata %>%
+  group_by(length, mismatch) %>%
+  ggplot(aes(x = length,
+             y = mismatch)) +
+  geom_point() +
+ggtitle("Mismatches in sequence lengths")
+
+```
+
 
 ```{r bitscore and organisms}
 # Here using the 
 joined_blast_data_metadata %>%
   filter(bitscore < 200,
-         bitscore > 150) %>%
+         bitscore > 180) %>%
   group_by(sscinames) %>%
   summarize(mean_bitscore = mean(bitscore)) %>%
   ggplot(aes(x = sscinames,

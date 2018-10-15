@@ -131,7 +131,7 @@ levels(factor(joined_blast_data_metadata$env_feature_s))
 joined_blast_data_metadata %>%
   group_by(sscinames, sample_type_s) %>%
   tally() %>%
-  filter(n > 500) %>%
+  filter(n > 320) %>%
   ggplot(aes(x = sscinames,
              y = n,
              fill = sample_type_s)) +
@@ -140,6 +140,27 @@ joined_blast_data_metadata %>%
                                    hjust = 1)) +
 ggtitle("Most abundant species in sample types")
 ```
+```{r abundance pull making}
+joined_blast_data_metadata %>%
+  group_by(sscinames, sample_type_s) %>%
+  tally() %>%
+  filter(n > 320) %>%
+```
+
+
+```{r similarity of mouse taxa on student hands}
+# grouping and summarizing to see how the types of taxa are similar on male/female
+# hands and computer mice
+joined_blast_data_metadata %>%
+  group_by(sample_type_s, sex_s, sscinames) %>%
+  tally() %>%
+  ggplot(aes(x = sample_type_s,
+             y = sscinames,
+             fill = sex_s)) +
+  geom_col() +
+ggtitle("Similarity of taxa in sample types")
+```
+
 
 ```{r alignment length and errors}
 #group and track the sequence alignment length and number of mismatches 
@@ -177,7 +198,7 @@ joined_blast_data_metadata %>%
   pull() -> low_bitscore
 ```
 
-```{r }
+```{r low bitscore vector }
 joined_blast_data_metadata %>%
   filter(sscinames %in% low_bitscore) %>%
   group_by(sscinames) %>%

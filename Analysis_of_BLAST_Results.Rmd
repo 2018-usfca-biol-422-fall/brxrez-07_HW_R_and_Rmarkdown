@@ -131,7 +131,7 @@ levels(factor(joined_blast_data_metadata$env_feature_s))
 joined_blast_data_metadata %>%
   group_by(sscinames, sample_type_s) %>%
   tally() %>%
-  filter(n > 320) %>%
+  filter(n > 475) %>%
   ggplot(aes(x = sscinames,
              y = n,
              fill = sample_type_s)) +
@@ -140,13 +140,6 @@ joined_blast_data_metadata %>%
                                    hjust = 1)) +
 ggtitle("Most abundant species in sample types")
 ```
-```{r abundance pull making}
-joined_blast_data_metadata %>%
-  group_by(sscinames, sample_type_s) %>%
-  tally() %>%
-  filter(n > 320) %>%
-```
-
 
 ```{r similarity of mouse taxa on student hands}
 # grouping and summarizing to see how the types of taxa are similar on male/female
@@ -154,10 +147,11 @@ joined_blast_data_metadata %>%
 joined_blast_data_metadata %>%
   group_by(sample_type_s, sex_s, sscinames) %>%
   tally() %>%
-  ggplot(aes(x = sample_type_s,
-             y = sscinames,
-             fill = sex_s)) +
-  geom_col() +
+  filter(n > 320) %>%
+  ggplot(aes(x = sex_s,
+             y = sample_type_s, 
+             fill = sscinames)) +
+  geom_bar(stat="identity") + 
 ggtitle("Similarity of taxa in sample types")
 ```
 
@@ -169,6 +163,8 @@ joined_blast_data_metadata %>%
   ggplot(aes(x = length,
              y = mismatch)) +
   geom_point() +
+  labs(x = "Sequence length") +
+  labs (y = "Number of Mismatches") +
 ggtitle("Mismatches in sequence lengths")
 
 ```

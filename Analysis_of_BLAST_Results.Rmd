@@ -161,11 +161,14 @@ ggtitle("Most abundant species in sample types")
 joined_blast_data_metadata %>%
   group_by(sample_type_s, sex_s, sscinames) %>%
   tally() %>%
-  filter(n > 320) %>%
-  ggplot(aes(x = sex_s,
-             y = sample_type_s, 
+  filter(n > 220) %>%
+  ggplot(aes(x = sample_type_s,
+             y = n,
              fill = sscinames)) +
-  geom_bar(stat="identity") + 
+    geom_col(position = position_dodge()) +
+    facet_wrap(~sex_s) +
+    theme(axis.text.x = element_text(angle = 60,
+                                     hjust = 1)) + 
 ggtitle("Similarity of taxa in sample types")
 ```
 

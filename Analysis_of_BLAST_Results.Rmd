@@ -7,15 +7,29 @@ output: github_document
 
 # Introduction
 
-Add 1-2 paragraphs here.
+Have you ever thought about how many people enter into your institutes library a day? Quickly these spaces could turn into breeding grounds for bacteria and other microbial organisms. Though they remain invisible to the human eye, there is no denying their existence and ability to grow and spread exponentially.
+Fortunately, advancements in the field of sequencing have allowed for analysis of environments we could never reach. In this analysis we'll examine diverse skin-associated bacterial communities and their comparison to human bacterial communities. Findings centered around these communities have found that skin bacterial communities are personalized, yet there is a link between the residual skin bacteria left on objects and bacteria on the object that the individual last touched. 
+This **revolutionary forensic practice** predicts and can even match the bacteria on objects that have been left untouched for up to two weeks. The bacteria range in place of origin and allow us to better understand the mechanisms of bacteria, the degree of variability, and to one day become integrated with *traditional* forensic practices. 
 
 # Methods
+Fierer et. al provided the inital samples that promoted this analysis. They swabbed the palms of men and woman and computer mice at the University of Colorado, Boulder. By following a persistent trend that skin-associated bacteria leaves on objects and surfaces touched on a daily basis, they discovered abundant and diverse bacterial communities. The following criteria was required to properly link the bacteria from different environments:
+*Recovered bacterial DNA allows for adequate characterization and comparison of communities.
+*Persistance of skin-associated bacteria on surfaces for days to weeks
+*Surfaces touched are effectively linked to individuals by assessing the similarity between the two bacterial communities. 
+This was completed by carrying out three interrelated studies, which combined phylogenetic community analyses with high throughput pyrosequencing methods. 
 
 ## Sample origin and sequencing
+
+Fierer and his collaborators first collected bacterial communities from individual keys from three keyboards. These keyboard communities were then compared to the communities found on the fingertips of the respective keyboard user. 
+In order to further support their samples they obtained swabs from private and public computer keyboards to quantify the degree of correspondance between the owners "fingerprints" and their keyboard versus keyboards they have never used.
+Using the skin bacteria communities they examined how similar they were with objects stored at **-20ºC**. This comparison is made due to the conditions closely matching ones that are imposed on stored samples before undergoing DNA extraction. The final step included using a Genbank database with over 250 hand surfaces and matching the objects to specific individuals by the bacteria that was collected. 
+The pyrosequencing technique aforementioned was used, thus generating an average of 1,4000 bacterial 16S rRNA gene sequences per sample. 
 
 Add about a paragraph here.
 
 ## Computational
+
+
 
 And another paragraph or two here.
 

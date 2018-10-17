@@ -41,8 +41,6 @@ Using the skin bacteria communities they examined how similar they were with obj
 This comparison is made due to the conditions closely matching ones that are imposed on stored samples before undergoing DNA extraction. The final step included using a Genbank database with over 250 hand surfaces and matching the objects to specific individuals by the bacteria that was collected. 
  
 
-And another paragraph or two here.
-
 # Results
 
 ```{r load-libraries, message = FALSE}

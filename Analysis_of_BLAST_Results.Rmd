@@ -6,30 +6,40 @@ output: github_document
 ---
 
 # Introduction
+Advancements and implementation of sequencing caters to range of scientific questions that are in question. 
+For instance, pyrosequencing is a method of DNA sequencing that relies on the detection of pyrophosphate release and generation of light on nucleotide incorporation. [Source](https://www.sciencedirect.com/topics/neuroscience/pyrosequencing) This particular type of sequencing has been beneficial in being able to quantitatively compare bacterial commmunities across various subjects. 
+In scientific literature there has been an influx of research that highlights the diversity of skin-associated bacteria, which was once thought of as less diverse. 
+This work has also demonstrated that there is high interindividual variability in the composition of these communities. Through using this approach we are better able to investigate communities that were once indistinguishable to us.
 
-Have you ever thought about how many people enter into your institutes library a day? Quickly these spaces could turn into breeding grounds for bacteria and other microbial organisms. Though they remain invisible to the human eye, there is no denying their existence and ability to grow and spread exponentially.
-Fortunately, advancements in the field of sequencing have allowed for analysis of environments we could never reach. In this analysis we'll examine diverse skin-associated bacterial communities and their comparison to human bacterial communities. Findings centered around these communities have found that skin bacterial communities are personalized, yet there is a link between the residual skin bacteria left on objects and bacteria on the object that the individual last touched. 
+Have you ever pondered on the number of individuals that pass through and use an institutes library a day? Quickly these spaces may turn into breeding grounds for bacteria and other microbial organisms. Though they remain invisible to the human eye, there is no denying their existence and ability to grow and spread exponentially.
+Fortunately, advancements in the field of sequencing have allowed for analysis of urban biomes. In this analysis we'll examine diverse skin-associated bacterial communities and their comparison to human bacterial communities. Findings centered around these communities have found that skin bacterial communities are personalized, yet there is a link between the residual skin bacteria left on objects and bacteria on the object that the individual last touched. 
 This **revolutionary forensic practice** predicts and can even match the bacteria on objects that have been left untouched for up to two weeks. The bacteria range in place of origin and allow us to better understand the mechanisms of bacteria, the degree of variability, and to one day become integrated with *traditional* forensic practices. 
 
 # Methods
+
+## Sample origin and sequencing
 Fierer et. al provided the inital samples that promoted this analysis. They swabbed the palms of men and woman and computer mice at the University of Colorado, Boulder. By following a persistent trend that skin-associated bacteria leaves on objects and surfaces touched on a daily basis, they discovered abundant and diverse bacterial communities. The following criteria was required to properly link the bacteria from different environments:
 *Recovered bacterial DNA allows for adequate characterization and comparison of communities.
 *Persistance of skin-associated bacteria on surfaces for days to weeks
 *Surfaces touched are effectively linked to individuals by assessing the similarity between the two bacterial communities. 
-This was completed by carrying out three interrelated studies, which combined phylogenetic community analyses with high throughput pyrosequencing methods. 
-
-## Sample origin and sequencing
-
-Fierer and his collaborators first collected bacterial communities from individual keys from three keyboards. These keyboard communities were then compared to the communities found on the fingertips of the respective keyboard user. 
-In order to further support their samples they obtained swabs from private and public computer keyboards to quantify the degree of correspondance between the owners "fingerprints" and their keyboard versus keyboards they have never used.
-Using the skin bacteria communities they examined how similar they were with objects stored at **-20ºC**. This comparison is made due to the conditions closely matching ones that are imposed on stored samples before undergoing DNA extraction. The final step included using a Genbank database with over 250 hand surfaces and matching the objects to specific individuals by the bacteria that was collected. 
-The pyrosequencing technique aforementioned was used, thus generating an average of 1,4000 bacterial 16S rRNA gene sequences per sample. 
+This was completed by carrying out three interrelated studies, which combined phylogenetic community analyses with a high throughput pyrosequencing approach. 
 
 Add about a paragraph here.
 
 ## Computational
 
+To initiate the project 20 raw fastq files were run through a pipeline that performed quality control checks. Information within these fastq files were from cultured swabs that originated from individual keys from three keyboards. These keyboard communities were then compared to the communities found on the fingertips of the respective keyboard user. These communities included the right palms of 5 human men, 5 human females, and 10 computer mice. The files were trimmed based on quality score and then converted to fasta files through the use of for loops. These files were then BLAST'ed against a local repository on GenBank to produce BLAST sequence code. By BLAST'ing a sample, it is being run against the database and looking for sequence matches.  Following this pipeline, the fasta files were analyzed further by running the CSV files into an alternate pipeline. This allowed for greater specification in what the files contained and what we may infer from them. 
 
+Once the BLAST sequence code was complete the output was marked down with R. The pyrosequencing technique aforementioned was used, thus generating an average of 1,4000 bacterial 16S rRNA gene sequences per sample. The BLAST results were transformed into figures rather than quantifiable data for further analysis. What this aims to answer is the validity of being able to quantitatively compare bacterial communities found on objects and skin to effectively match the individual to the object with a high degree of certainty.[Source](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?study=ERP022657) The final step included using another Genbank database with over 250 hand surfaces and matching the objects to specific individuals by the bacteria that was collected. 
+
+
+
+
+The cultured swabs originated from individual keys from three keyboards. These keyboard communities were then compared to the communities found on the fingertips of the respective keyboard user. 
+In order to further support their samples they obtained swabs from private and public computer keyboards to quantify the degree of correspondance between the owners "fingerprints" and their keyboard versus keyboards they have never used.
+Using the skin bacteria communities they examined how similar they were with objects stored at **-20ºC**. [Source](https://www.ncbi.nlm.nih.gov/bioproject/PRJEB20500/)
+This comparison is made due to the conditions closely matching ones that are imposed on stored samples before undergoing DNA extraction. The final step included using a Genbank database with over 250 hand surfaces and matching the objects to specific individuals by the bacteria that was collected. 
+ 
 
 And another paragraph or two here.
 
@@ -150,10 +160,13 @@ joined_blast_data_metadata %>%
              y = n,
              fill = sample_type_s)) +
   geom_col()+
+  labs(x = "Scientific names") +
+  labs(y = "Number of species") +
   theme(axis.text.x = element_text(angle = 90,
                                    hjust = 1)) +
 ggtitle("Most abundant species in sample types")
 ```
+
 
 ```{r similarity of mouse taxa on student hands}
 # grouping and summarizing to see how the types of taxa are similar on male/female
@@ -169,6 +182,8 @@ joined_blast_data_metadata %>%
     facet_wrap(~sex_s) +
     theme(axis.text.x = element_text(angle = 60,
                                      hjust = 1)) + 
+  labs(x = "Sample type") +
+  labs(y = "Number of species" ) +
 ggtitle("Similarity of taxa in sample types")
 ```
 
@@ -181,7 +196,7 @@ joined_blast_data_metadata %>%
              y = mismatch)) +
   geom_point() +
   labs(x = "Sequence length") +
-  labs (y = "Number of Mismatches") +
+  labs(y = "Number of Mismatches") +
 ggtitle("Mismatches in sequence lengths")
 
 ```
@@ -197,6 +212,8 @@ joined_blast_data_metadata %>%
   ggplot(aes(x = sscinames,
              y = mean_bitscore))+
   geom_col() +
+  labs(x = "Scientific names") +
+  labs(y = "Mean Bitscore") +
   theme(axis.text.x = element_text(angle = 90,
                                    hjust = 1)) +
   ggtitle("Bitscores")
@@ -231,27 +248,15 @@ joined_blast_data_metadata %>%
     ggtitle("Percent Identity") +
     xlab("Percent")
 ```
-```{r dplyr-example-1}
-# using select () to extract particular columns of data
-joined_blast_data_metadata %>%
-  select(Organism_s, AvgSpotLen_l)
 
-# use filter() to extract only certain rows that match a condition 
-joined_blast_data_metadata %>%
-  filter(env_material_s == "dust") 
-```
-Don't forget to report what your figures show in words, here in the Results section.
-
-```{r summary-table}
-# Finally, we'd like to be able to make a summary table of the counts of
-# sequences for each subject for both sample types. To do that we can use the
-# table() function. We add the kable() function as well (from the tidyr package)
-# in order to format the table nicely when the document is knitted
-kable(table(joined_blast_data_metadata$host_subject_id_s,
-            joined_blast_data_metadata$sample_type_s))
-```
+In Figure 1 this demonstrates the top four species that were found in both the computer mice and the right palm of both men and women. The number of times that a species name was recognized is tallyed and plotted against its repsective name and demonstrates the abundance. It shows that **Solemya pervernicosa gill symbiont** has the greatest abundance on human hands while **Bacterioidetes endosymbiont of Metaseiulus occidentalis** has the greatest abundance on only computer mice. An interesting finding that this figure reports is that although **Aquitalea sp.KJ011** was amongst one of the most abundant bacterial species, it appeared only on human palms. 
+Figure 2. aimed to delve greater into the distribution of the species in each specific sample type. It becomes evident that there is discrimination in the types of species that exist on male and female hands, while sharing some similarity with the computer mice. The computer mice samples have a greater distribution of bacterial communities, while the human palm communities are more heavily populated 1-2 communities. **Bartonella washoensis** is shown to appear more *only* on the palms of females while **Solemya pervernicosa gill symbiont** appears more *only* on the palms of males. This graph is taking the top reported communities and cross examining them to see if a community thrives on more than one sample type. 
+Figure 3. offers a *broader* perspective on the analysis made. It demonstrates that as the sequence lengths increase, there is a steady increase in the number of mismatches. The shorter the sequence length is the less mismatches that are reported. It groups and tracks the sequence alingment length and number of mismatches. 
+Figure 4. compiles the names of species that obtained a Bitscore in the range of 180-200. A Bitscore is generated by BLAST and it demonstrates that there is a greater accuracy in being able to match the sequences of the collected species to the Genbank database that it was compared to. It reports those that had greater sequence similarity and plots them against one another. 
 
 # Discussion
 
 Add 2-3 paragraphs here interpreting your results and considering future directions one might take in analyzing these data.
+
+
 
